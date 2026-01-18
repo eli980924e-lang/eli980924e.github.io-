@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>餐飲服務與餐廳類型小測驗（英翻中）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #fef3c7, #e0f2fe);
+      color: #111827;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+      padding: 24px 20px 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (min-width: 640px) {
+      .container {
+        padding: 32px 32px 36px;
+      }
+    }
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .divider {
+      margin: 18px 0 16px;
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .quiz-box {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 16px 14px 18px;
+      background: #f9fafb;
+    }
+
+    @media (min-width: 640px) {
+      .quiz-box {
+        padding: 18px 18px 20px;
+      }
+    }
+
+    .question-label {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 9px 11px;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    input[type="text"]:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+      background-color: #f9fafb;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+      white-space: nowrap;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
+    }
+
+    .primary-btn:hover {
+      background: linear-gradient(135deg, #15803d, #16a34a);
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.4);
+    }
+
+    .secondary-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .secondary-btn:hover {
+      background: #d1d5db;
+    }
+
+    .feedback {
+      min-height: 22px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .feedback.correct {
+      color: #16a34a;
+    }
+
+    .feedback.wrong {
+      color: #b91c1c;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result-box {
+      margin-top: 18px;
+      padding: 16px 14px 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 14px;
+    }
+
+    .score-text {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .score-detail {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .wrong-title {
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .wrong-list {
+      margin-top: 6px;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .wrong-item {
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .wrong-answer {
+      color: #b91c1c;
+    }
+
+    .footer-text {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>餐飲服務與餐廳類型小測驗</h1>
+    <p class="subtitle">題庫只包含服務方式與餐廳類型 · 英翻中</p>
+    <hr class="divider">
+
+    <div class="meta">
+      <div id="progressText">第 0 / 0 題</div>
+      <div class="pill">英 → 中（服務 / 餐廳）</div>
+    </div>
+
+    <div id="quizSection">
+      <div class="quiz-box">
+        <div class="question-label">請輸入對應的標準中文名稱</div>
+        <div class="question-text" id="questionText"></div>
+        <div class="input-row">
+          <input id="answerInput" type="text" autocomplete="off" placeholder="在此輸入中文名稱">
+          <button id="submitBtn" class="primary-btn">提交</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+      </div>
+    </div>
+
+    <div id="resultSection" class="hidden">
+      <div class="result-box">
+        <div class="score-text" id="scoreText"></div>
+        <div class="score-detail" id="scoreDetail"></div>
+        <div id="wrongBlock" class="hidden">
+          <div class="wrong-title">錯題整理</div>
+          <ul id="wrongList" class="wrong-list"></ul>
+        </div>
+      </div>
+      <div style="margin-top: 14px; text-align: center;">
+        <button id="restartBtn" class="secondary-btn">再測一次</button>
+      </div>
+    </div>
+
+    <div class="footer-text">本測驗只考服務方式與餐廳類型 · 按 Enter 也可提交</div>
+  </div>
+
+  <script>
+    const quizData = {
+      "Buffet Service": "自助餐服務",
+      "Cabin Catering Service": "機艙餐飲服務",
+      "Cafeteria Service": "自助式餐廳服務",
+      "Catering Service": "宴會/餐飲承辦服務",
+      "Counter Service": "櫃台式服務",
+      "Delivery Service": "外送服務",
+      "Drive-in Service": "汽車餐廳服務",
+      "Drive-through Service": "得來速服務",
+      "In-flight Service": "機上餐飲服務",
+      "Room Service": "客房送餐服務",
+      "Table Service": "桌餐服務",
+      "Take-out Service": "外帶服務",
+      "Club Member Restaurants": "會員制俱樂部餐廳",
+      "Combination Restaurants": "複合式餐廳",
+      "Community Restaurants": "社區餐廳",
+      "Independent Restaurants": "獨立餐廳",
+      "À La Carte Restaurants": "單點式餐廳",
+      "Filling Station": "加油站附設餐廳",
+      "Restaurant Chains": "連鎖餐廳",
+      "Specialty Restaurants": "特色餐廳",
+      "Theme Restaurants": "主題餐廳",
+      "Luxury Restaurants": "豪華餐廳"
+    };
+
+    const maxQuestions = 10;
+    let questions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let wrongAnswers = [];
+
+    const questionTextEl = document.getElementById("questionText");
+    const answerInputEl = document.getElementById("answerInput");
+    const submitBtnEl = document.getElementById("submitBtn");
+    const feedbackEl = document.getElementById("feedback");
+    const progressTextEl = document.getElementById("progressText");
+    const quizSectionEl = document.getElementById("quizSection");
+    const resultSectionEl = document.getElementById("resultSection");
+    const scoreTextEl = document.getElementById("scoreText");
+    const scoreDetailEl = document.getElementById("scoreDetail");
+    const wrongBlockEl = document.getElementById("wrongBlock");
+    const wrongListEl = document.getElementById("wrongList");
+    const restartBtnEl = document.getElementById("restartBtn");
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+    }
+
+    function initQuiz() {
+      const entries = Object.entries(quizData);
+      shuffle(entries);
+      const total = Math.min(maxQuestions, entries.length);
+      questions = [];
+      for (let i = 0; i < total; i += 1) {
+        const item = entries[i];
+        questions.push({
+          eng: item[0],
+          chn: item[1]
+        });
+      }
+      currentIndex = 0;
+      score = 0;
+      wrongAnswers = [];
+      quizSectionEl.classList.remove("hidden");
+      resultSectionEl.classList.add("hidden");
+      feedbackEl.textContent = "";
+      feedbackEl.className = "feedback";
+      updateQuestion();
+    }
+
+    function updateQuestion() {
+      const total = questions.length;
+      if (currentIndex >= total) {
+        showResult();
+        return;
+      }
+      const q = questions[currentIndex];
+      const number = currentIndex + 1;
+      progressTextEl.textContent = "第 " + number + " / " + total + " 題";
+      questionTextEl.textContent = q.eng + " → 中文";
+      answerInputEl.value = "";
+      answerInputEl.focus();
+      feedbackEl.textContent = "";
+      feedbackEl.className = "feedback";
+    }
+
+    function normalize(text) {
+      return text.trim().toLowerCase();
+    }
+
+    function handleSubmit() {
+      const total = questions.length;
+      if (currentIndex >= total) {
+        return;
+      }
+      const q = questions[currentIndex];
+      const userAns = answerInputEl.value;
+      const correctAns = q.chn;
+      if (!userAns.trim()) {
+        feedbackEl.textContent = "請先輸入答案。";
+        feedbackEl.className = "feedback wrong";
+        answerInputEl.focus();
+        return;
+      }
+      if (normalize(userAns) === normalize(correctAns)) {
+        feedbackEl.textContent = "回答正確！";
+        feedbackEl.className = "feedback correct";
+        score += 10;
+      } else {
+        feedbackEl.textContent = "回答錯誤，正確答案是：" + correctAns;
+        feedbackEl.className = "feedback wrong";
+        wrongAnswers.push({
+          eng: q.eng,
+          chn: q.chn,
+          user: userAns
+        });
+      }
+      currentIndex += 1;
+      setTimeout(function () {
+        updateQuestion();
+      }, 650);
+    }
+
+    function showResult() {
+      quizSectionEl.classList.add("hidden");
+      resultSectionEl.classList.remove("hidden");
+      const total = questions.length;
+      const fullScore = total * 10;
+      scoreTextEl.textContent = "你的得分：" + score + " 分";
+      scoreDetailEl.textContent = "共 " + total + " 題，每題 10 分，滿分 " + fullScore + " 分。";
+      if (wrongAnswers.length === 0) {
+        wrongBlockEl.classList.add("hidden");
+        wrongListEl.innerHTML = "";
+      } else {
+        wrongBlockEl.classList.remove("hidden");
+        wrongListEl.innerHTML = "";
+        wrongAnswers.forEach(function (item) {
+          const li = document.createElement("li");
+          li.className = "wrong-item";
+          li.textContent = item.eng + " ↔ " + item.chn + " ｜你的答案：";
+          const span = document.createElement("span");
+          span.className = "wrong-answer";
+          span.textContent = item.user;
+          li.appendChild(span);
+          wrongListEl.appendChild(li);
+        });
+      }
+    }
+
+    submitBtnEl.addEventListener("click", function () {
+      handleSubmit();
+    });
+
+    answerInputEl.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        handleSubmit();
+      }
+    });
+
+    restartBtnEl.addEventListener("click", function () {
+      initQuiz();
+    });
+
+    initQuiz();
+  </script>
+</body>
+</html>
